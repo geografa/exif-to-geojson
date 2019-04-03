@@ -1,6 +1,6 @@
 # Exif To GeoJSON
 
-This takes a directory full of images and makes a GeoJSON file with all of the found GPS points.
+This takes a directory full of images and makes a GeoJSON file with all of the found GPS points. This is adapted from https://github.com/hallahan/exif-to-geojson but uses [GL JS](https://www.mapbox.com/mapbox-gl-js/api/) for the map rendering library.
 
 1. Put the images you want to create a corresponding GeoJSON file with in the img directory.
 2. `node exif-to-geojson.js`
