@@ -25,12 +25,14 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2ptYjNtZWxnMDBrdDNwbnVicGJzO
 
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/grafa/cjtgeg9um23191fpkobxgjpy3',
-    center: [-122.4843719775863,45.66896356027243],
-    zoom: 6
+    style: 'mapbox://styles/grafa/cjx66hcc21cj61cuwce8w4msj',
+    center: [2.3665115424811347,48.858781906702404],
+    zoom: 12
 });
 
 var url = './exif.geojson';
+
+var popup = new mapboxgl.Popup();
 
 map.on('load', function () {
     // Add a layer showing the photos.
@@ -116,7 +118,7 @@ map.on('load', function () {
 
     // When a click event occurs on a feature in the places layer, open a popup at the
     // location of the feature, with description HTML from its properties.
-    map.on('click', 'photos-point', function (e) {
+    map.on('mouseover', 'photos-point', function (e) {
         var coordinates = e.features[0].geometry.coordinates.slice();
         var description = e.features[0].properties.imgPath;
         console.log(description);
@@ -128,10 +130,10 @@ map.on('load', function () {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
 
-        new mapboxgl.Popup()
-            .setLngLat(coordinates)
+        popup.setLngLat(coordinates)
             .setHTML('<img src="' + description + '".jpg width="300px" />')
             .addTo(map);
+        
     });
 
     // Change the cursor to a pointer when the mouse is over the photos-point layer.
@@ -142,6 +144,7 @@ map.on('load', function () {
     // Change it back to a pointer when it leaves.
     map.on('mouseleave', 'photos-point', function () {
         map.getCanvas().style.cursor = '';
+        popup.remove();
     });
 });
 </script>
